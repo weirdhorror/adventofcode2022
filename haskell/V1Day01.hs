@@ -1,7 +1,10 @@
-module Day1 where
+module V1Day1 where
 
 import Data.List
 import System.IO.Unsafe
+
+inputFilename :: String
+inputFilename = "../data/input01.txt"
 
 -- split string by delimiter of any length
 split :: String -> String -> [String]
@@ -24,7 +27,7 @@ stripPrefix' prefix string =
 
 -- yolo
 text :: String
-text = unsafePerformIO . readFile $ "calories.txt"
+text = unsafePerformIO . readFile $ inputFilename
 
 parseGroup :: String -> [Integer]
 parseGroup chunk = map read (lines chunk)

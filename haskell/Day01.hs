@@ -1,7 +1,10 @@
-module Day1b where
+module Day1 where
 
 import Data.List (sort)
 import System.IO.Unsafe
+
+inputFilename :: String
+inputFilename = "../data/input01.txt"
 
 -- parse lines into groups of integers
 parse :: [String] -> [[Integer]]
@@ -15,7 +18,7 @@ parse' (x:xs) part parts = parse' xs (read x:part) parts
 
 -- yolo
 text :: String
-text = unsafePerformIO . readFile $ "calories.txt"
+text = unsafePerformIO . readFile $ inputFilename
 
 elves :: [[Integer]]
 elves = parse (lines text)
