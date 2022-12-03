@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
 
 const inputFilename: string = '../data/input01.txt';
+const lines = readFileSync(inputFilename, 'utf8').split('\n');
 
 type Calorie = number;
 type Elf = Calorie[];
@@ -24,8 +25,7 @@ const parse = (lines: string[]): Elves =>
     [[], []] as Partition
   )[1];
 
-const text = readFileSync(inputFilename, 'utf8').split('\n');
-const elves: Elves = parse(text);
+const elves: Elves = parse(lines);
 const calories = elves.map(sum).sort((a, b) => b - a);
 
 const [top] = calories;
