@@ -17,84 +17,45 @@ defmodule Day03 do
   end
 
   def read_input_data, do: File.read!(@input_file)
-  def parse_lines(data), do: String.split(data, "\n", trim: true)
+  def split_lines(data), do: String.split(data, "\n", trim: true)
 
   # Part One
 
-  def part_one do
+  def part_one(options \\ []) do
     read_input_data()
-    |> parse_lines()
-    |> split_pairs()
-    |> map_shared_in_pairs()
-    |> sum_shared_priorities()
-  end
-
-  def part_one_verbose do
-    read_input_data()
-    |> parse_lines()
+    |> split_lines()
     |> split_pairs()
     |> map_shared_with_priority()
-    |> then(fn result ->
-      {sum_shared_priorities(result), result}
-    end)
+    |> format_result(options)
   end
 
   def split_pairs(lines) do
     Enum.map(lines, fn line ->
-      String.split_at(line, div(String.length(line), 2))
+      line
+      |> String.split_at(div(String.length(line), 2))
+      |> Tuple.to_list()
     end)
-  end
-
-  def map_shared_in_pairs(pairs) do
-    Enum.map(pairs, &find_shared/1)
   end
 
   # Part Two
 
-  def part_two do
+  def part_two(options \\ []) do
     read_input_data()
-    |> parse_lines()
-    |> chunk_groups()
-    |> map_shared_in_groups()
-    |> sum_shared_priorities()
-  end
-
-  def part_two_verbose do
-    read_input_data()
-    |> parse_lines()
+    |> split_lines()
     |> chunk_groups()
     |> map_shared_with_priority()
-    |> then(fn result ->
-      {sum_shared_priorities(result), result}
-    end)
+    |> format_result(options)
   end
 
   def chunk_groups(lines) do
     Enum.chunk_every(lines, 3)
   end
 
-  def map_shared_in_groups(groups) do
-    Enum.map(groups, &find_shared/1)
-  end
+  # Common
 
-  # Private
-
-  defp split_letters(string), do: String.split(string, ~r//, trim: true)
-
-  defp priority_for(<<letter::binary-size(1)>>)
-       when is_binary(letter) do
-    letter
-    |> String.to_charlist()
-    |> List.first()
-    |> priority_for()
-  end
-
-  defp priority_for(n) when n in 97..122, do: n - 96
-  defp priority_for(n) when n in 65..90, do: n - 38
-
-  defp find_shared([first | rest]) do
-    firsts = split_letters(first)
-    rests = Enum.map(rest, &split_letters/1)
+  def find_shared([first | rest]) do
+    firsts = split_unique_letters(first)
+    rests = Enum.map(rest, &split_unique_letters/1)
 
     firsts
     |> Enum.reduce(%{}, fn letter, shared ->
@@ -109,7 +70,13 @@ defmodule Day03 do
     |> Map.keys()
   end
 
-  defp find_shared({a, b}), do: find_shared([a, b])
+  # Private
+
+  defp split_unique_letters(string) do
+    string
+    |> String.split(~r//, trim: true)
+    |> Enum.uniq()
+  end
 
   defp map_shared_with_priority(pairs_or_groups) do
     Enum.map(pairs_or_groups, fn pair_or_group ->
@@ -125,6 +92,27 @@ defmodule Day03 do
         priority: priority
       }
     end)
+  end
+
+  defp priority_for(n) when n in 97..122, do: n - 96
+  defp priority_for(n) when n in 65..90, do: n - 38
+
+  defp priority_for(<<letter::binary-size(1)>>)
+       when is_binary(letter) do
+    letter
+    |> String.to_charlist()
+    |> List.first()
+    |> priority_for()
+  end
+
+  defp format_result(result, options) do
+    sum = sum_shared_priorities(result)
+
+    if options[:verbose] do
+      {sum, result}
+    else
+      sum
+    end
   end
 
   def sum_shared_priorities(shared) do
