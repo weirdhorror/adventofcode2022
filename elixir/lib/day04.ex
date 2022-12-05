@@ -1,4 +1,4 @@
-defmodule Day04 do
+defmodule Aoc.Day04 do
   @moduledoc """
   Day 4: Camp Cleanup.
   """
@@ -9,6 +9,15 @@ defmodule Day04 do
   def read_input_data, do: File.read!(@input_file)
   def read_sample_data, do: File.read!(@sample_file)
   def split_lines(data), do: String.split(data, "\n", trim: true)
+
+  # Main
+
+  def main do
+    IO.inspect({
+      part_one(),
+      part_two()
+    })
+  end
 
   # Part One
 

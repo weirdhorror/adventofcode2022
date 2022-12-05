@@ -96,7 +96,7 @@ fn get_points((left, right): Round) -> u32 {
 }
 
 fn main() {
-    let input_filename = "../../data/input02.txt";
+    let input_filename = "../data/input02.txt";
 
     // vec of lines from file
     let lines: Vec<String> = fs
@@ -110,11 +110,7 @@ fn main() {
     // vec of (string, string) pairs of codes
     let mut pairs: Vec<Pair> = Vec::new();
     for line in lines.iter() {
-        let mut moves: Vec<String> = line
-            .to_string()
-            .split(" ")
-            .map(String::from)
-            .collect();
+        let mut moves: Vec<String> = line.to_string().split(" ").map(String::from).collect();
 
         if moves.len() >= 2 {
             let left = moves.remove(0);

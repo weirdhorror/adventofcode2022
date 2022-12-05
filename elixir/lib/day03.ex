@@ -1,4 +1,4 @@
-defmodule Day03 do
+defmodule Aoc.Day03 do
   @moduledoc """
   Rucksack Reorganization.
   """
@@ -18,6 +18,15 @@ defmodule Day03 do
 
   def read_input_data, do: File.read!(@input_file)
   def split_lines(data), do: String.split(data, "\n", trim: true)
+
+  # Main
+
+  def main do
+    IO.inspect({
+      part_one(),
+      part_two()
+    })
+  end
 
   # Part One
 

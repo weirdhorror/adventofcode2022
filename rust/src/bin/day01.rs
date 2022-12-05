@@ -5,7 +5,7 @@ type Elf = Vec<Calorie>;
 type Elves = Vec<Elf>;
 
 fn main() {
-    let input_filename = "../../data/input01.txt";
+    let input_filename = "../data/input01.txt";
 
     // get vector of lines from input file
     let lines: Vec<String> = fs

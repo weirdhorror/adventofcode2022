@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+
+### Runs AoC solution for given day and language.
+###
+### Usage:
+###    run <day> [<lang>]
+###
+### Options:
+###   <day>   advent day: e.g. 1, 3
+###   <lang>  elixir, haskell, rust or typescript
+###           note: not all days have solution for every language
+
+help() {
+  awk -F'### ' '/^###/ { print $2 }' "$0"
+}
+
+# absolute path to root
+rootDir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+# first argument missing or help request
+# show help and exit
+if [ -z "$1" ] || [ "$1" == "-h" ] || [ "$1" == "--help" ];
+then
+  help
+  exit 0
+fi
+
+echo "🚀 Running AoC solution"
+
+# get day from first argument and zero-pad
+arg1="$1"
+day=$(echo ${arg1//[!0-9]/} | xargs printf '%02d')
+
+# ensure day is two digits
+if ! [[ ${day} =~ ^[[:digit:]]{2}$ ]];
+then
+  echo "error: trouble parsing day number 🫣"
+  exit 1
+fi
+
+# get lang
+langs='(elixir|haskell|rust|typescript)'
+
+if [ -z "$2" ];
+then
+  # second argument missing
+  # try to get lang from current subfolder
+  pwd=$(pwd)
+  dirLangs="${rootDir}/${langs}"
+  if [[ $pwd =~ $dirLangs ]];
+  then
+    lang="${BASH_REMATCH[1]}"
+  fi
+else
+  # get lang rom second arg
+  lang="$2"
+fi
+
+# ensure lang is valid
+if ! [[ ${lang} =~ ${langs} ]];
+then
+  echo "error: trouble parsing language 🫣"
+  exit 1
+fi
+
+echo "-- Day ${day} ✔"
+
+case $lang in
+  elixir)
+    echo "-- Elixir ✔"
+
+    langDir="${rootDir}/elixir"
+    cd $langDir
+
+    echo -e "-- Running lib/day${day}.ex\n"
+    MIX_QUIET=true mix run -e "Aoc.Day${day}.main()"
+
+    ;;
+
+  haskell)
+    echo "-- Haskell ✔"
+
+    langDir="${rootDir}/haskell"
+    inputFile="app/Day${day}"
+    cd $langDir
+
+    echo -e "-- Running ${inputFile}.hs\n"
+    stack runhaskell ${inputFile}
+
+    ;;
+
+  rust)
+    echo "-- Rust ✔"
+
+    langDir="${rootDir}/rust"
+    inputFile="day${day}"
+    cd $langDir
+
+    echo -e "-- Running src/bin/${inputFile}.rs\n"
+    cargo run --quiet --bin ${inputFile}
+
+    ;;
+
+  typescript)
+    echo "-- TypeScript ✔"
+
+    langDir="${rootDir}/typescript"
+    inputFile="src/day${day}.ts"
+    outputFile="target/day${day}.js"
+    cd $langDir
+
+    echo -n "-- Compiling ${inputFile} => ${outputFile} "
+    tsc ${inputFile} --outDir target
+    echo "✔"
+
+    echo -e "-- Running ${outputFile}\n"
+    node ${outputFile}
+
+    ;;
+
+  *)
+    echo "error: missing handler for language 🫣"
+    exit 1
+    ;;
+esac
+
+if [ $? -eq 0 ];
+then
+  echo -e "\n✔ ok"
+fi
