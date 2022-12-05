@@ -1,12 +1,13 @@
-module Day04 where
+module Day04 (main) where
+
+import Helpers (yoloReadFile)
 import Data.List.Split (splitOn)
-import System.IO.Unsafe
 
 inputData :: String
-inputData = unsafePerformIO . readFile $ "../data/input04.txt"
+inputData = yoloReadFile "../data/input04.txt"
 
-sampleData :: String
-sampleData = unsafePerformIO . readFile $ "../data/input04-sample.txt"
+-- sampleData :: String
+-- sampleData = yoloReadFile "../data/input04-sample.txt"
 
 type Range = (Int, Int)
 

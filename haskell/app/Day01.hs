@@ -1,7 +1,10 @@
-module Day01 where
+module Day01 (main) where
 
+import Helpers (yoloReadFile)
 import Data.List (sort)
-import System.IO.Unsafe
+
+inputData :: String
+inputData = yoloReadFile "../data/input01.txt"
 
 type Calorie = Integer
 type Elf = [Calorie]
@@ -17,8 +20,6 @@ parse' ("":xs) [] elves = parse' xs [] elves
 parse' ("":xs) elf elves = parse' xs [] (reverse elf:elves)
 parse' (x:xs) elf elves = parse' xs (read x:elf) elves
 
-inputData :: String
-inputData = unsafePerformIO . readFile $ "../data/input01.txt"
 
 main :: IO ()
 main = print (top, topThree)

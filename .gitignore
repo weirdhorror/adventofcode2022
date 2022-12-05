@@ -1,0 +1,27 @@
+# ignore all
+*
+
+# but keep folders
+!*/
+
+# and keep these globs
+!bin/*
+!.envrc
+!.gitignore
+!*.cabal
+!*.ex?
+!*.hs
+!*.md
+!*.rs
+!*.ts
+!*.txt
+!Cargo.*
+!package.json*
+!package.yaml
+!stack.yaml*
+!tsconfig.json
+
+# still ignore these
+node_modules
+target
+scratch.*

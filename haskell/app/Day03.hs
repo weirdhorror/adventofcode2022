@@ -1,15 +1,16 @@
-module Day03 where
+module Day03 (main) where
+
+import Helpers (yoloReadFile)
 import Data.Char (ord)
 import Data.Ix (inRange)
 import Data.List.Split (chunksOf)
 import Data.Set (toList, fromList)
-import System.IO.Unsafe
 
 inputData :: String
-inputData = unsafePerformIO . readFile $ "../data/input03.txt"
+inputData = yoloReadFile "../data/input03.txt"
 
-sampleData :: String
-sampleData = unsafePerformIO . readFile $ "../data/input03-sample.txt"
+-- sampleData :: String
+-- sampleData = yoloReadFile "../data/input03-sample.txt"
 
 slice :: Int -> Int -> [a] -> [a]
 slice from to xs = take (to - from + 1) (drop from xs)
