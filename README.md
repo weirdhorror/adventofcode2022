@@ -5,6 +5,6 @@
 ## Usage:
 
 ```bash
-run --help
-run <day> <lang>
+aoc run --help
+aoc run <day> <lang>
 ```
