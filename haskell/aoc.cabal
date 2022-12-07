@@ -43,6 +43,7 @@ executable aoc-exe
       Day01
       Day03
       Day04
+      Day06
       Paths_aoc
   hs-source-dirs:
       app
