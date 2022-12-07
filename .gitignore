@@ -1,5 +1,6 @@
 .DS_Store
 .elixir_ls
+dist
 node_modules
 target
 tmp

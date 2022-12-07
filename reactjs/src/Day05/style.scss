@@ -1,0 +1,55 @@
+.app {
+  font-family: Fira Code;
+  border: 2px solid #2f2f2f;
+  border-radius: 4px;
+  margin: 20px auto;
+  padding: 20px;
+  width: 800px;
+
+  h1 {
+    text-align: center;
+    margin-top: 0;
+  }
+}
+
+.console {
+  background-color: #2f2f2f;
+  border-radius: 4px;
+  color: rgb(233, 233, 233);
+  font-family: monospace;
+  padding: 10px;
+  text-align: center;
+}
+
+li.stack {
+  transition: background-color 800ms ease-in-out;
+
+  &.from {
+    background-color: #ffedf6;
+  }
+
+  &.to {
+    background-color: #ddfffe;
+  }
+
+  span.crate {
+    border: 1px solid transparent;
+    display: inline-block;
+    padding: 2px;
+
+    &.placeholder {
+      color: transparent;
+    }
+
+    &.from {
+      background-color: #ffcce6;
+      border: 1px solid #979797;
+    }
+
+    &.to {
+      text-decoration: underline;
+      text-decoration-color: #979797;
+      // border-bottom: 1px solid #979797;
+    }
+   }
+}
